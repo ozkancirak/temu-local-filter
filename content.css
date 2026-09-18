@@ -1,0 +1,35 @@
+/* Temu Yerel Ürün Gizleyici - Stiller */
+
+/* Tamamen gizleme modu */
+.temu-local-hidden {
+  display: none !important;
+}
+
+/* Yarı saydam/Soluklaştırma modu */
+.temu-local-dimmed {
+  opacity: 0.18 !important;
+  filter: grayscale(100%) !important;
+  position: relative !important;
+  transition: opacity 0.25s ease, filter 0.25s ease !important;
+}
+
+.temu-local-dimmed:hover {
+  opacity: 0.85 !important;
+  filter: grayscale(0%) !important;
+}
+
+/* Yarı saydam moddayken üzerine küçük bir uyarı rozeti */
+.temu-local-dimmed::after {
+  content: "Yerel Ürün";
+  position: absolute;
+  top: 8px;
+  right: 8px;
+  background: rgba(0, 0, 0, 0.75);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 600;
+  padding: 3px 6px;
+  border-radius: 4px;
+  z-index: 10;
+  pointer-events: none;
+}

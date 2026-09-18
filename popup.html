@@ -1,0 +1,257 @@
+<!DOCTYPE html>
+<html lang="tr">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Temu Yerel Filtre</title>
+  <style>
+    /* Aydınlık Tema (Varsayılan) */
+    :root {
+      --primary: #fb7701;
+      --primary-hover: #e06800;
+      --bg: #ffffff;
+      --card-bg: #f8f9fa;
+      --btn-bg: #ffffff;
+      --stat-grad-start: #ffffff;
+      --text-main: #1f2937;
+      --text-muted: #6b7280;
+      --border: #e5e7eb;
+      --slider-bg: #cbd5e1;
+      --radius: 8px;
+    }
+
+    /* Dinamik Karanlık Tema */
+    @media (prefers-color-scheme: dark) {
+      :root {
+        --primary: #fb7701;
+        --primary-hover: #ff8c1a;
+        --bg: #0f172a;
+        --card-bg: #1e293b;
+        --btn-bg: #0f172a;
+        --stat-grad-start: #1e293b;
+        --text-main: #f8fafc;
+        --text-muted: #94a3b8;
+        --border: #334155;
+        --slider-bg: #475569;
+      }
+    }
+
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+    }
+
+    body {
+      width: 250px;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif;
+      background-color: var(--bg);
+      color: var(--text-main);
+      padding: 14px;
+      user-select: none;
+      transition: background-color 0.2s ease, color 0.2s ease;
+    }
+
+    /* Başlık ve Şalter */
+    .header {
+      display: flex;
+      align-items: center;
+      justify-content: space-between;
+      padding-bottom: 12px;
+      border-bottom: 1px solid var(--border);
+      margin-bottom: 12px;
+    }
+
+    .header-title {
+      display: flex;
+      align-items: center;
+      gap: 8px;
+      font-size: 14px;
+      font-weight: 700;
+      color: var(--text-main);
+    }
+
+    .header-logo {
+      width: 22px;
+      height: 22px;
+      display: block;
+      flex-shrink: 0;
+    }
+
+    /* Modern Switch */
+    .switch {
+      position: relative;
+      display: inline-block;
+      width: 38px;
+      height: 22px;
+    }
+
+    .switch input {
+      opacity: 0;
+      width: 0;
+      height: 0;
+    }
+
+    .slider {
+      position: absolute;
+      cursor: pointer;
+      top: 0; left: 0; right: 0; bottom: 0;
+      background-color: var(--slider-bg);
+      transition: 0.25s ease;
+      border-radius: 22px;
+    }
+
+    .slider:before {
+      position: absolute;
+      content: "";
+      height: 16px;
+      width: 16px;
+      left: 3px;
+      bottom: 3px;
+      background-color: white;
+      transition: 0.25s ease;
+      border-radius: 50%;
+      box-shadow: 0 1px 3px rgba(0, 0, 0, 0.25);
+    }
+
+    input:checked + .slider {
+      background-color: var(--primary);
+    }
+
+    input:checked + .slider:before {
+      transform: translateX(16px);
+    }
+
+    /* İçerik Alanı (Kapalıyken Soluklaşır) */
+    .content-area {
+      transition: opacity 0.25s ease, filter 0.25s ease;
+    }
+
+    .content-area.disabled {
+      opacity: 0.4;
+      filter: grayscale(100%);
+      pointer-events: none;
+    }
+
+    /* Kart Yapısı */
+    .card {
+      background: var(--card-bg);
+      border-radius: var(--radius);
+      padding: 10px 12px;
+      margin-bottom: 10px;
+      border: 1px solid var(--border);
+      transition: background-color 0.2s ease, border-color 0.2s ease;
+    }
+
+    /* Mod Butonları */
+    .mode-group {
+      display: flex;
+      gap: 8px;
+    }
+
+    .mode-btn {
+      flex: 1;
+      height: 32px;
+      padding: 0 6px;
+      font-size: 11.5px;
+      font-weight: 600;
+      white-space: nowrap;
+      border: 1px solid var(--border);
+      background: var(--btn-bg);
+      border-radius: 6px;
+      cursor: pointer;
+      color: var(--text-muted);
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      transition: all 0.15s ease;
+    }
+
+    .mode-btn.active {
+      background: var(--primary) !important;
+      color: #ffffff !important;
+      border-color: var(--primary) !important;
+    }
+
+    /* Büyük ve Ortalanmış Güncel Sayaç Kartı */
+    .stat-card {
+      text-align: center;
+      padding: 12px 8px;
+      background: linear-gradient(180deg, var(--stat-grad-start) 0%, var(--card-bg) 100%);
+    }
+
+    .stat-number {
+      font-size: 26px;
+      font-weight: 800;
+      color: var(--primary);
+      line-height: 1.1;
+      margin-bottom: 2px;
+    }
+
+    .stat-label {
+      font-size: 11px;
+      font-weight: 500;
+      color: var(--text-muted);
+    }
+
+    /* Alt Bilgi */
+    .footer {
+      text-align: center;
+      font-size: 10px;
+      color: var(--text-muted);
+      margin-top: 6px;
+      opacity: 0.8;
+    }
+  </style>
+</head>
+<body>
+  <!-- Başlık + Doğrudan Başlıkta Şalter -->
+  <div class="header">
+    <div class="header-title">
+      <svg class="header-logo" viewBox="0 0 512 512" fill="none" role="img" aria-label="Temu Local Filter">
+        <defs>
+          <linearGradient id="popOrange" x1="0" y1="0" x2="1" y2="1">
+            <stop offset="0" stop-color="#FF9A2E"/>
+            <stop offset="1" stop-color="#FB7701"/>
+          </linearGradient>
+        </defs>
+        <rect width="512" height="512" rx="112" fill="url(#popOrange)"/>
+        <g transform="translate(96.00 76.80) scale(3.2000)">
+          <path d="M50 4C50 4 66 13 86 16.5C91.5 17.4 95 21.2 95 26.6L95 56C95 80 76 99 50 108C24 99 5 80 5 56L5 26.6C5 21.2 8.5 17.4 14 16.5C34 13 50 4 50 4Z" fill="#FFFFFF"/>
+          <path d="M26 28H74C77.8 28 79.6 32.6 76.9 35.2L59 52.6V74C59 77 55.7 78.8 53.2 77.2L45.2 72.2C44 71.5 43.3 70.2 43.3 68.9V52.6L23.1 35.2C20.4 32.6 22.2 28 26 28Z" fill="url(#popOrange)"/>
+        </g>
+      </svg>
+      <span>Temu Yerel Filtre</span>
+    </div>
+
+    <!-- Aç/Kapa Şalteri -->
+    <label class="switch">
+      <input type="checkbox" id="toggleFilter" checked>
+      <span class="slider"></span>
+    </label>
+  </div>
+
+  <!-- Ana İçerik Alanı (Kapalıyken Soluklaşır) -->
+  <div class="content-area" id="contentArea">
+    <!-- Çalışma Modu Kartı -->
+    <div class="card">
+      <div class="mode-group" id="modeGroup">
+        <button type="button" class="mode-btn active" data-mode="hide">Tamamen Gizle</button>
+        <button type="button" class="mode-btn" data-mode="dim">Soluklaştır</button>
+      </div>
+    </div>
+
+    <!-- Büyük & Ortalanmış Güncel Sayaç Kartı -->
+    <div class="card stat-card">
+      <div class="stat-number" id="countDisplay">0</div>
+      <div class="stat-label">Gizlenen Yerel Ürün</div>
+    </div>
+  </div>
+
+  <div class="footer">
+    %100 Yerel Çalışır • Reklam ve Takip İçermez
+  </div>
+
+  <script src="popup.js"></script>
+</body>
+</html>

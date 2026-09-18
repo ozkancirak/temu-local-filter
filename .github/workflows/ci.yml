@@ -1,0 +1,50 @@
+name: CI Check
+
+on:
+  push:
+    branches: [ main, master ]
+  pull_request:
+    branches: [ main, master ]
+
+jobs:
+  validate:
+    name: Validate Extension & Syntax
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20'
+
+      - name: Validate Manifest.json
+        run: |
+          node -e "
+          const fs = require('fs');
+          const m = JSON.parse(fs.readFileSync('manifest.json', 'utf8'));
+          if (m.manifest_version !== 3) throw new Error('Manifest version must be 3');
+          if (!m.name || !m.version) throw new Error('Name and version are required');
+          console.log('manifest.json is valid (v' + m.version + ')');
+          "
+
+      - name: Check JavaScript Syntax
+        run: |
+          node --check content.js background.js popup.js
+          echo "All JavaScript files have valid syntax"
+
+      - name: Verify Required Icons
+        run: |
+          node -e "
+          const fs = require('fs');
+          const icons = ['16', '32', '48', '128'];
+          for (const size of icons) {
+            const path = 'icons/icon' + size + '.png';
+            if (!fs.existsSync(path)) throw new Error('Missing icon: ' + path);
+            const stat = fs.statSync(path);
+            if (stat.size === 0) throw new Error('Icon is empty: ' + path);
+          }
+          console.log('All extension icons exist and are valid');
+          "

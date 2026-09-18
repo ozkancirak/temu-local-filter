@@ -1,0 +1,16 @@
+# OS files
+.DS_Store
+Thumbs.db
+*.tmp
+
+# Editor files
+.vscode/
+.idea/
+
+# Archives
+*.zip
+*.crx
+
+# Drafts & Claude preview outputs
+Claude outputs/
+

@@ -1,0 +1,15 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 512 512" width="512" height="512" fill="none" role="img" aria-labelledby="tlfTitle tlfDesc">
+  <title id="tlfTitle">Temu Local Filter</title>
+  <desc id="tlfDesc">Beyaz kalkan ve filtre hunisi, turuncu yuvarlatılmış kare üzerinde.</desc>
+  <defs>
+    <linearGradient id="tlfBg" x1="0" y1="0" x2="1" y2="1">
+      <stop offset="0" stop-color="#FF9A2E"/>
+      <stop offset="1" stop-color="#FB7701"/>
+    </linearGradient>
+  </defs>
+  <rect width="512" height="512" rx="112" fill="url(#tlfBg)"/>
+  <g transform="translate(96.00 76.80) scale(3.2000)">
+    <path d="M50 4C50 4 66 13 86 16.5C91.5 17.4 95 21.2 95 26.6L95 56C95 80 76 99 50 108C24 99 5 80 5 56L5 26.6C5 21.2 8.5 17.4 14 16.5C34 13 50 4 50 4Z" fill="#FFFFFF"/>
+    <path d="M26 28H74C77.8 28 79.6 32.6 76.9 35.2L59 52.6V74C59 77 55.7 78.8 53.2 77.2L45.2 72.2C44 71.5 43.3 70.2 43.3 68.9V52.6L23.1 35.2C20.4 32.6 22.2 28 26 28Z" fill="url(#tlfBg)"/>
+  </g>
+</svg>
