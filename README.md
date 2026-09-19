@@ -33,11 +33,6 @@
 3. Sağ üstteki **Geliştirici modu** anahtarını etkinleştirin.
 4. **Paketlenmemiş öğe yükle** butonuna tıklayarak arşivden çıkardığınız klasörü seçin.
 
-> **Geliştiriciler için:** İsterseniz depoyu doğrudan klonlayarak da kurabilirsiniz:
-> ```bash
-> git clone https://github.com/ozkancirak/temu-local-filter.git
-> ```
-
 ## Teşekkür
 
 Bu proje, temel fikir olarak [@iltekin](https://github.com/iltekin)'in `remove-local-temu` eklentisinden esinlenerek Manifest V3 uyumluluğu ve temiz bir mimariyle sıfırdan yazılmıştır.
