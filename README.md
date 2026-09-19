@@ -1,11 +1,15 @@
 <p align="center">
-  <img src="assets/logo.svg" alt="Temu Local Filter" width="100" height="100">
+  <img src="assets/logo.svg" alt="Temu Yerel Filtre" width="100" height="100">
 </p>
 
-<h1 align="center">Temu Local Filter</h1>
+<h1 align="center">Temu Yerel Filtre</h1>
 
 <p align="center">
   Temu üzerindeki yerel depo ve satıcı ürünlerini otomatik olarak filtreleyen Manifest V3 tarayıcı eklentisi.
+</p>
+
+<p align="center">
+  <img src="assets/demo.webp" alt="Temu Yerel Filtre Demosu" width="100%">
 </p>
 
 ## Özellikler
@@ -22,15 +26,17 @@
 
 ### Chrome / Edge / Brave
 
-1. Depoyu klonlayın veya zip olarak indirin:
-   ```bash
-   git clone https://github.com/ozkancirak/temu-local-filter.git
-   ```
+1. [**Buraya tıklayarak en son sürümü (.zip) indirin**](https://github.com/ozkancirak/temu-local-filter/releases/latest) ve arşivden bir klasöre çıkartın.
 2. Tarayıcınızda uzantılar sayfasını açın:
    - Chrome: `chrome://extensions`
    - Edge: `edge://extensions`
 3. Sağ üstteki **Geliştirici modu** anahtarını etkinleştirin.
-4. **Paketlenmemiş öğe yükle** butonuna tıklayarak proje klasörünü seçin.
+4. **Paketlenmemiş öğe yükle** butonuna tıklayarak arşivden çıkardığınız klasörü seçin.
+
+> **Geliştiriciler için:** İsterseniz depoyu doğrudan klonlayarak da kurabilirsiniz:
+> ```bash
+> git clone https://github.com/ozkancirak/temu-local-filter.git
+> ```
 
 ## Teşekkür
 
