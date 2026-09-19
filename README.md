@@ -26,7 +26,7 @@
 
 ### Chrome / Edge / Brave
 
-1. [**Buraya tıklayarak en son sürümü (.zip) indirin**](https://github.com/ozkancirak/temu-local-filter/releases/latest) ve arşivden bir klasöre çıkartın.
+1. [**Buraya tıklayarak eklentiyi (.zip) indirin**](https://github.com/ozkancirak/temu-local-filter/releases/download/v1.0.0/temu-local-filter-v1.0.0.zip) ve arşivden bir klasöre çıkartın.
 2. Tarayıcınızda uzantılar sayfasını açın:
    - Chrome: `chrome://extensions`
    - Edge: `edge://extensions`
