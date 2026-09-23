@@ -173,6 +173,12 @@
       border-color: var(--primary) !important;
     }
 
+    .mode-btn:focus-visible,
+    .switch input:focus-visible + .slider {
+      outline: 2px solid var(--primary);
+      outline-offset: 3px;
+    }
+
     /* Büyük ve Ortalanmış Güncel Sayaç Kartı */
     .stat-card {
       text-align: center;
@@ -226,7 +232,7 @@
 
     <!-- Aç/Kapa Şalteri -->
     <label class="switch">
-      <input type="checkbox" id="toggleFilter" checked>
+      <input type="checkbox" id="toggleFilter" checked aria-label="Yerel ürün filtrelemesini etkinleştir">
       <span class="slider"></span>
     </label>
   </div>
@@ -235,9 +241,9 @@
   <div class="content-area" id="contentArea">
     <!-- Çalışma Modu Kartı -->
     <div class="card">
-      <div class="mode-group" id="modeGroup">
-        <button type="button" class="mode-btn active" data-mode="hide">Tamamen Gizle</button>
-        <button type="button" class="mode-btn" data-mode="dim">Soluklaştır</button>
+      <div class="mode-group" id="modeGroup" role="group" aria-label="Filtreleme görünümü">
+        <button type="button" class="mode-btn active" data-mode="hide" aria-pressed="true">Tamamen Gizle</button>
+        <button type="button" class="mode-btn" data-mode="dim" aria-pressed="false">Soluklaştır</button>
       </div>
     </div>
 

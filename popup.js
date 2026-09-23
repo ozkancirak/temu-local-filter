@@ -71,7 +71,9 @@ modeGroup.querySelectorAll(".mode-btn").forEach((btn) => {
 
 function updateModeUI(mode) {
   modeGroup.querySelectorAll(".mode-btn").forEach((btn) => {
-    if (btn.getAttribute("data-mode") === mode) {
+    const isActive = btn.getAttribute("data-mode") === mode;
+    btn.setAttribute("aria-pressed", String(isActive));
+    if (isActive) {
       btn.classList.add("active");
     } else {
       btn.classList.remove("active");
