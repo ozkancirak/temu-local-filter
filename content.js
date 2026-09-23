@@ -147,9 +147,7 @@
       }
     });
 
-    if (newlyFound > 0) {
-      updateStats();
-    }
+    updateStats();
   }
 
   // Karta gizleme veya saydamlaştırma stilini uygula
@@ -201,15 +199,15 @@
   const observer = new MutationObserver((mutations) => {
     if (!config.enabled) return;
 
-    let hasAddedNodes = false;
+    let hasNodeChanges = false;
     for (let i = 0; i < mutations.length; i++) {
-      if (mutations[i].addedNodes.length > 0) {
-        hasAddedNodes = true;
+      if (mutations[i].addedNodes.length > 0 || mutations[i].removedNodes.length > 0) {
+        hasNodeChanges = true;
         break;
       }
     }
 
-    if (!hasAddedNodes) return;
+    if (!hasNodeChanges) return;
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
