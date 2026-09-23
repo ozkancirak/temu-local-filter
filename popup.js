@@ -1,7 +1,5 @@
 // Temu Yerel Ürün Gizleyici - Popup Mantığı
 
-let currentMode = "hide";
-
 const toggleFilter = document.getElementById("toggleFilter");
 const modeGroup = document.getElementById("modeGroup");
 const countDisplay = document.getElementById("countDisplay");
@@ -15,8 +13,7 @@ chrome.storage.sync.get(
   },
   (items) => {
     toggleFilter.checked = items.enabled;
-    currentMode = items.mode;
-    updateModeUI(currentMode);
+    updateModeUI(items.mode);
     updateEnabledUI(items.enabled);
   }
 );
@@ -63,7 +60,6 @@ function updateEnabledUI(isEnabled) {
 modeGroup.querySelectorAll(".mode-btn").forEach((btn) => {
   btn.addEventListener("click", () => {
     const mode = btn.getAttribute("data-mode");
-    currentMode = mode;
     updateModeUI(mode);
     chrome.storage.sync.set({ mode: mode });
   });

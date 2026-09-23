@@ -17,7 +17,6 @@
     mode: "hide" // 'hide' (tamamen gizle) veya 'dim' (yarı saydam yap)
   };
 
-  let hiddenCount = 0;
   let debounceTimer = null;
 
   // Ayarları hafızaya yükle
@@ -165,7 +164,6 @@
   // Sayacı güncelle ve background worker'a ilet
   function updateStats() {
     const totalCurrent = document.querySelectorAll("[data-temu-filtered]").length;
-    hiddenCount = totalCurrent;
 
     try {
       chrome.runtime.sendMessage({
@@ -180,7 +178,6 @@
     document.querySelectorAll("[data-temu-filtered]").forEach((card) => {
       clearCardStyle(card);
     });
-    hiddenCount = 0;
     try {
       chrome.runtime.sendMessage({ action: "UPDATE_COUNT", count: 0 });
     } catch (e) {}
