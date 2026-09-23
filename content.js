@@ -17,7 +17,6 @@
     mode: "hide" // 'hide' (tamamen gizle) veya 'dim' (yarı saydam yap)
   };
 
-  let processedCards = new WeakSet();
   let hiddenCount = 0;
   let debounceTimer = null;
 
@@ -132,33 +131,35 @@
     if (!config.enabled) return;
 
     const potentialBadges = document.querySelectorAll("span, div, em, b, strong");
-    let newlyFound = 0;
+    const localCards = new Set();
 
     potentialBadges.forEach((el) => {
       if (el.children.length === 0 && el.textContent) {
         if (isLocalBadgeText(el.textContent)) {
           const card = findProductCard(el);
-          if (card && !processedCards.has(card)) {
-            processedCards.add(card);
-            applyCardStyle(card);
-            newlyFound++;
-          }
+          if (card) localCards.add(card);
         }
       }
     });
 
+    document.querySelectorAll("[data-temu-filtered]").forEach((card) => {
+      if (!localCards.has(card)) clearCardStyle(card);
+    });
+    localCards.forEach(applyCardStyle);
     updateStats();
   }
 
   // Karta gizleme veya saydamlaştırma stilini uygula
   function applyCardStyle(card) {
-    card.classList.remove("temu-local-hidden", "temu-local-dimmed");
-    if (config.mode === "dim") {
-      card.classList.add("temu-local-dimmed");
-    } else {
-      card.classList.add("temu-local-hidden");
-    }
+    const shouldDim = config.mode === "dim";
+    card.classList.toggle("temu-local-hidden", !shouldDim);
+    card.classList.toggle("temu-local-dimmed", shouldDim);
     card.setAttribute("data-temu-filtered", "true");
+  }
+
+  function clearCardStyle(card) {
+    card.classList.remove("temu-local-hidden", "temu-local-dimmed");
+    card.removeAttribute("data-temu-filtered");
   }
 
   // Sayacı güncelle ve background worker'a ilet
@@ -177,10 +178,8 @@
   // Eklenti kapatıldığında veya mod değiştiğinde stilleri temizle
   function clearAllModifications() {
     document.querySelectorAll("[data-temu-filtered]").forEach((card) => {
-      card.classList.remove("temu-local-hidden", "temu-local-dimmed");
-      card.removeAttribute("data-temu-filtered");
+      clearCardStyle(card);
     });
-    processedCards = new WeakSet();
     hiddenCount = 0;
     try {
       chrome.runtime.sendMessage({ action: "UPDATE_COUNT", count: 0 });
@@ -196,18 +195,8 @@
   });
 
   // DOM değişikliklerini izle (debounce)
-  const observer = new MutationObserver((mutations) => {
+  const observer = new MutationObserver(() => {
     if (!config.enabled) return;
-
-    let hasNodeChanges = false;
-    for (let i = 0; i < mutations.length; i++) {
-      if (mutations[i].addedNodes.length > 0 || mutations[i].removedNodes.length > 0) {
-        hasNodeChanges = true;
-        break;
-      }
-    }
-
-    if (!hasNodeChanges) return;
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
@@ -217,7 +206,10 @@
 
   observer.observe(document.body, {
     childList: true,
-    subtree: true
+    subtree: true,
+    characterData: true,
+    attributes: true,
+    attributeFilter: ["data-goods-id", "goods-id"]
   });
 
   if (document.readyState === "loading") {
