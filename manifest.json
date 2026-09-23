@@ -1,7 +1,7 @@
 {
   "manifest_version": 3,
   "name": "Temu Yerel Filtre",
-  "version": "1.0.0",
+  "version": "1.0.1",
   "description": "Temu üzerindeki yerel depo ve satıcı ürünlerini otomatik olarak filtreler ve gizler.",
   "permissions": [
     "storage"
