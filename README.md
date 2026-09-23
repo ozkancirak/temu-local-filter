@@ -20,7 +20,7 @@
   - *Tamamen Gizle:* Yerel ürün kartını DOM üzerinde gizleyerek ızgara (grid) düzenini korur.
   - *Soluklaştır:* Ürünü yarı saydam ve gri yapar, üzerine gelindiğinde ürün incelenebilir.
 - **Sayaç Rozeti:** Sayfada filtrelenen yerel ürün adedini uzantı simgesi ve açılır menüde gösterir.
-- **Gizlilik:** Dış ağ istekleri, yönlendirme (affiliate) kodları veya analitik içermez; tamamen istemci tarafında çalışır.
+- **Gizlilik:** Ürün bilgisi toplamaz, yönlendirme (affiliate) kodu veya analitik içermez ve uzantı kendisi ağ isteği göndermez. Ayarlar `chrome.storage.sync` içinde saklanır; tarayıcı eşitlemesi açıksa açık/kapalı ve mod tercihleri tarayıcılar arasında eşitlenebilir.
 
 ## Kurulum
 
