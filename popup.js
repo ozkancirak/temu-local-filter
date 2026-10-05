@@ -26,14 +26,8 @@ chrome.tabs.query({ active: true, currentWindow: true }, (tabs) => {
       if (!chrome.runtime.lastError && response && typeof response.count === "number") {
         countDisplay.textContent = response.count.toString();
       } else {
-        chrome.runtime.sendMessage({ action: "GET_TAB_COUNT", tabId: activeTabId }, (bgRes) => {
-          if (!chrome.runtime.lastError && bgRes && typeof bgRes.count === "number") {
-            countDisplay.textContent = bgRes.count.toString();
-          } else {
-            chrome.action.getBadgeText({ tabId: activeTabId }, (badgeText) => {
-              countDisplay.textContent = badgeText || "0";
-            });
-          }
+        chrome.action.getBadgeText({ tabId: activeTabId }, (badgeText) => {
+          countDisplay.textContent = badgeText || "0";
         });
       }
     });

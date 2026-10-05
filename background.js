@@ -1,7 +1,5 @@
 // Temu Yerel Ürün Gizleyici - Service Worker (Background Script)
 
-const tabCounts = {};
-
 // Rozet metin formatı (4 haneye kadar tam sayı)
 function formatBadgeText(count) {
   if (count <= 0) return "";
@@ -14,20 +12,9 @@ function formatBadgeText(count) {
 // Sekmeler arası sayaç ve rozet (badge) yönetimi
 chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
   if (message.action === "UPDATE_COUNT" && sender.tab?.id) {
-    const count = message.count || 0;
-    const tabId = sender.tab.id;
-    tabCounts[tabId] = count;
-
     chrome.action.setBadgeText({
-      text: formatBadgeText(count),
-      tabId: tabId
+      text: formatBadgeText(message.count || 0),
+      tabId: sender.tab.id
     });
-  } else if (message.action === "GET_TAB_COUNT" && message.tabId) {
-    sendResponse({ count: tabCounts[message.tabId] || 0 });
   }
-});
-
-// Sekme kapandığında hafızayı temizle
-chrome.tabs.onRemoved.addListener((tabId) => {
-  delete tabCounts[tabId];
 });
