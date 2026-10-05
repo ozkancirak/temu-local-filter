@@ -9,6 +9,13 @@
 </p>
 
 <p align="center">
+  <a href="https://github.com/ozkancirak/temu-local-filter/releases/latest"><img src="https://img.shields.io/github/v/release/ozkancirak/temu-local-filter?logo=github&style=flat" alt="Sürüm"></a>
+  <a href="https://github.com/ozkancirak/temu-local-filter/actions/workflows/ci.yml"><img src="https://img.shields.io/github/actions/workflow/status/ozkancirak/temu-local-filter/ci.yml?branch=main&logo=githubactions&logoColor=white&style=flat" alt="CI"></a>
+  <img src="https://img.shields.io/badge/Manifest-V3-4285F4?logo=googlechrome&logoColor=white&style=flat" alt="Manifest V3">
+  <a href="LICENSE"><img src="https://img.shields.io/github/license/ozkancirak/temu-local-filter?style=flat" alt="Lisans"></a>
+</p>
+
+<p align="center">
   <img src="assets/demo.webp" alt="Temu Yerel Filtre Demosu" width="100%">
 </p>
 
