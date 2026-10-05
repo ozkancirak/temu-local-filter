@@ -118,6 +118,7 @@
       findLocalBadges(root).forEach((el) => {
         const card = findProductCard(el);
         if (card) applyCardStyle(card);
+        else console.debug("[temu-local-filter] ürün kartı bulunamadı", el);
       });
     });
 
@@ -143,14 +144,16 @@
 
   // Sayacı güncelle ve background worker'a ilet
   function updateStats() {
-    const totalCurrent = document.querySelectorAll("[data-temu-filtered]").length;
+    sendCount(document.querySelectorAll("[data-temu-filtered]").length);
+  }
 
+  // Eklenti güncellenip bağlam geçersiz olduysa sessizce geç, diğer hataları göster
+  function sendCount(count) {
     try {
-      chrome.runtime.sendMessage({
-        action: "UPDATE_COUNT",
-        count: totalCurrent
-      });
-    } catch (e) {}
+      chrome.runtime.sendMessage({ action: "UPDATE_COUNT", count });
+    } catch (e) {
+      if (!String(e.message).includes("context invalidated")) throw e;
+    }
   }
 
   // Eklenti kapatıldığında veya mod değiştiğinde stilleri temizle
@@ -158,9 +161,7 @@
     document.querySelectorAll("[data-temu-filtered]").forEach((card) => {
       clearCardStyle(card);
     });
-    try {
-      chrome.runtime.sendMessage({ action: "UPDATE_COUNT", count: 0 });
-    } catch (e) {}
+    sendCount(0);
   }
 
   // Popup sorguladığında anlık tam sayıyı dön
