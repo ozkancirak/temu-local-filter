@@ -14,7 +14,7 @@
 
 ## Özellikler
 
-- **Dinamik DOM Filtreleme:** Sayfa kaydırıldıkça yüklenen ürün kartlarını `MutationObserver` ve `WeakSet` önbelleği ile gecikmesiz filtreler.
+- **Dinamik DOM Filtreleme:** Sayfa kaydırıldıkça yüklenen ürün kartlarını `MutationObserver` ile yalnızca değişen düğümleri tarayarak gecikmesiz filtreler.
 - **Yerel Etiket Algılama:** `[Yerel]`, `Local`, `TR Depo` ve benzeri yerel depo etiketlerini tespit eder.
 - **İki Farklı Çalışma Modu:**
   - *Tamamen Gizle:* Yerel ürün kartını DOM üzerinde gizleyerek ızgara (grid) düzenini korur.
