@@ -15,12 +15,10 @@ function isLocalBadgeText(text) {
   if (!text || text.length > 25) return false;
   const cleanText = text.trim().toLowerCase();
   return LOCAL_KEYWORDS.some((kw) => {
-    return (
-      cleanText === kw ||
-      cleanText === `[${kw}]` ||
-      cleanText.startsWith(`${kw} `) ||
-      cleanText.endsWith(` ${kw}`)
-    );
+    if (cleanText === kw || cleanText === `[${kw}]`) return true;
+    // Tek kelimelik belirteçler ("local", "yerel") cümle içinde geçebilir, sadece tam eşleşir
+    if (!kw.includes(" ")) return false;
+    return cleanText.startsWith(`${kw} `) || cleanText.endsWith(` ${kw}`);
   });
 }
 
