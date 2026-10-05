@@ -28,6 +28,7 @@
         "*://*.temu.com/*"
       ],
       "js": [
+        "badge.js",
         "content.js"
       ],
       "css": [

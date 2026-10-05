@@ -32,7 +32,7 @@ jobs:
 
       - name: Check JavaScript Syntax
         run: |
-          node --check content.js background.js popup.js
+          node --check badge.js content.js background.js popup.js
           echo "All JavaScript files have valid syntax"
 
       - name: Verify Required Icons
