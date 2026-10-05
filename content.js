@@ -101,26 +101,30 @@
     return null;
   }
 
-  // Filtreleme fonksiyonu
-  function runFilter() {
+  const BADGE_SELECTOR = "span, div, em, b, strong";
+
+  // Kök ve altındaki yerel etiket elemanlarını döndür
+  function findLocalBadges(root) {
+    const els = Array.from(root.querySelectorAll(BADGE_SELECTOR));
+    if (root.matches(BADGE_SELECTOR)) els.push(root);
+    return els.filter((el) => el.children.length === 0 && isLocalBadgeText(el.textContent));
+  }
+
+  // Filtreleme fonksiyonu: yalnızca verilen köklerin altını tarar
+  function runFilter(roots = [document.body]) {
     if (!config.enabled) return;
 
-    const potentialBadges = document.querySelectorAll("span, div, em, b, strong");
-    const localCards = new Set();
-
-    potentialBadges.forEach((el) => {
-      if (el.children.length === 0 && el.textContent) {
-        if (isLocalBadgeText(el.textContent)) {
-          const card = findProductCard(el);
-          if (card) localCards.add(card);
-        }
-      }
+    roots.forEach((root) => {
+      findLocalBadges(root).forEach((el) => {
+        const card = findProductCard(el);
+        if (card) applyCardStyle(card);
+      });
     });
 
+    // Yeniden kullanılan kartlar artık yerel değilse temizle
     document.querySelectorAll("[data-temu-filtered]").forEach((card) => {
-      if (!localCards.has(card)) clearCardStyle(card);
+      if (findLocalBadges(card).length === 0) clearCardStyle(card);
     });
-    localCards.forEach(applyCardStyle);
     updateStats();
   }
 
@@ -168,12 +172,28 @@
   });
 
   // DOM değişikliklerini izle (debounce)
-  const observer = new MutationObserver(() => {
+  const pending = new Set();
+
+  function queueNode(node) {
+    const el = node.nodeType === Node.ELEMENT_NODE ? node : node.parentElement;
+    if (el) pending.add(el);
+  }
+
+  const observer = new MutationObserver((records) => {
     if (!config.enabled) return;
+
+    records.forEach((r) => {
+      if (r.type === "childList") r.addedNodes.forEach(queueNode);
+      else queueNode(r.target);
+    });
 
     clearTimeout(debounceTimer);
     debounceTimer = setTimeout(() => {
-      window.requestAnimationFrame(runFilter);
+      window.requestAnimationFrame(() => {
+        const roots = [...pending].filter((el) => el.isConnected);
+        pending.clear();
+        runFilter(roots);
+      });
     }, 120);
   });
 
@@ -186,7 +206,7 @@
   });
 
   if (document.readyState === "loading") {
-    document.addEventListener("DOMContentLoaded", runFilter);
+    document.addEventListener("DOMContentLoaded", () => runFilter());
   } else {
     runFilter();
   }
