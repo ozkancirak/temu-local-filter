@@ -35,6 +35,9 @@ jobs:
           node --check badge.js content.js background.js popup.js
           echo "All JavaScript files have valid syntax"
 
+      - name: Run Badge Tests
+        run: node badge.test.js
+
       - name: Verify Required Icons
         run: |
           node -e "
